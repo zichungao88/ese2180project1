@@ -2,7 +2,7 @@ import numpy as np
 import json
 
 # 1 TODO: Write a system of equations Ax = b to solve for the node voltages
-# IN PROGRESS
+# DONE (More Details of the generic compositions of A & b in written report)
 length = 25 # rows = columns
 A = np.zeros((length, length))
 # print(np.matrix(A))
@@ -54,30 +54,30 @@ for i in range(length):
 # print(np.matrix(A))
 # print(np.matrix(b))
 
-def get_neighbors(node):
+def get_neighbors(node_self):
     neighbors = []
     for key in resistances:
-        if key[0] == node:
+        if key[0] == node_self:
             neighbors.append(key[1])
-        elif key[1] == node:
+        elif key[1] == node_self:
             neighbors.append(key[0])
     return neighbors
 
-for node in range(1, length + 1):
-    neighbors = get_neighbors(node)
+for node_self in range(1, length + 1):
+    neighbors = get_neighbors(node_self)
     # print('Node ' + str(node) + ' is connected to node(s) ' + str(neighbor))
     sum_resistances = 0
-    for neighbor in neighbors:
-        if (node, neighbor) in resistances:
-            resistance = resistances[(node, neighbor)]
+    for node_neighbor in neighbors:
+        if (node_self, node_neighbor) in resistances:
+            resistance = resistances[(node_self, node_neighbor)]
         else:
-            resistance = resistances[(neighbor, node)]
+            resistance = resistances[(node_neighbor, node_self)]
     # print('The resistance between ' + str(node) + ' and ' + str(neighbor) + ' is ' + str(resistance))
     if resistance > 0:
-        A[node - 1, neighbor - 1] = -1 / resistance
+        A[node_self - 1, node_neighbor - 1] = -1 / resistance
         sum_resistances += 1 / resistance
-    A[node - 1, node - 1] = sum_resistances
-    b[node - 1] = 0
+    A[node_self - 1, node_self - 1] = sum_resistances
+    b[node_self - 1] = 0
 # print(np.matrix(A))
 # print(np.matrix(b))
 
