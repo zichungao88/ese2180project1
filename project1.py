@@ -86,9 +86,26 @@ A, b = calculate_A(resistances, voltages, length)
 
 
 # 5 TODO: Compute the LU factorization of A
+# IN PROGRESS
+L = np.zeros((length, length))
+U = np.zeros((length, length))
+
+def LU_decomposition(A, length): # needs scrutiny
+    for i in range(1, length - 1):
+        for j in range(i + 1, length):
+            A[j, i] /= A[i, i]
+            for k in range(i + 1, length):
+                A[j, k] -= A[j, i] * A[i, k]
+    return A
+
+U = LU_decomposition(A, length)
+print(np.matrix(np.round(U, 3)))
 
 
 # 6 TODO: Compute & output the node voltages & currents through each link
+# IN PROGRESS
+# x = np.linalg.solve(A, b)
+# print(np.matrix(x))
 
 
 # 7 TODO: Write the output of the previous three steps to a file
