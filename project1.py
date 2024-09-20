@@ -2,12 +2,13 @@ import numpy as np
 import json
 
 # TODO: Write a system of equations Ax = b to solve for the node voltages
-# QUESTION: 5x5 or 25x25
-rows = 5
-columns = 5
-A = np.array([[1 for j in range(columns)] for i in range(rows)])
+
+rows = 25
+columns = 25
+A = np.zeros((rows, columns))
 # print(np.matrix(A))
-b = np.array([[1 for j in range(1)] for j in range(columns)])
+b = np.zeros(columns)
+b.shape = (columns, 1)
 # print(np.matrix(b))
 # print(A.dot(b))
 
