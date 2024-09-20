@@ -46,14 +46,7 @@ voltages = read_voltages_json('node_voltages.json')
 
 
 # 4 TODO: Compute the matrix A using the data read in previously
-# IN PROGRESS (ALMOST DONE)
-for i in range(length):
-    if i + 1 in voltages:
-        A[i, i] = 1
-        b[i] = voltages[i + 1]
-# print(np.matrix(A))
-# print(np.matrix(b))
-
+# DONE
 def get_neighbors(node_self):
     neighbors = []
     for key in resistances:
@@ -63,23 +56,33 @@ def get_neighbors(node_self):
             neighbors.append(key[0])
     return neighbors
 
-for node_self in range(1, length + 1):
-    neighbors = get_neighbors(node_self)
-    # print('Node ' + str(node) + ' is connected to node(s) ' + str(neighbor))
-    sum_resistances = 0
-    for node_neighbor in neighbors:
-        if (node_self, node_neighbor) in resistances:
-            resistance = resistances[(node_self, node_neighbor)]
+def calculate_A(resistances, voltages, length):
+    # A = np.zeros((length, length))
+    # b = np.zeros(length)
+    for node_self in range(1, length + 1):
+        if node_self in voltages:
+            A[node_self - 1, node_self - 1] = 1
+            b[node_self - 1] = voltages[node_self]
         else:
-            resistance = resistances[(node_neighbor, node_self)]
-    # print('The resistance between ' + str(node) + ' and ' + str(neighbor) + ' is ' + str(resistance))
-    if resistance > 0:
-        A[node_self - 1, node_neighbor - 1] = -1 / resistance
-        sum_resistances += 1 / resistance
-    A[node_self - 1, node_self - 1] = sum_resistances
-    b[node_self - 1] = 0
-# print(np.matrix(A))
-# print(np.matrix(b))
+            neighbors = get_neighbors(node_self)
+            # print('Node ' + str(node) + ' is connected to node(s) ' + str(neighbor))
+            sum_resistances = 0
+            for node_neighbor in neighbors:
+                if (node_self, node_neighbor) in resistances:
+                    resistance = resistances[(node_self, node_neighbor)]
+                else:
+                    resistance = resistances[(node_neighbor, node_self)]
+                # print('The resistance between ' + str(node) + ' and ' + str(neighbor) + ' is ' + str(resistance))
+                if resistance > 0:
+                    A[node_self - 1, node_neighbor - 1] = -1 / resistance
+                    sum_resistances += 1 / resistance
+                A[node_self - 1, node_self - 1] = sum_resistances
+                b[node_self - 1] = 0
+    return A, b
+
+A, b = calculate_A(resistances, voltages, length)
+# print(np.matrix(np.round(A, 3)))
+# print(np.matrix(np.round(b, 3)))
 
 
 # 5 TODO: Compute the LU factorization of A
