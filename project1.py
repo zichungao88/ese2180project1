@@ -91,10 +91,10 @@ L = np.zeros((length, length))
 U = np.zeros((length, length))
 
 def LU_decomposition(A, length): # needs scrutiny
-    for i in range(1, length - 1):
-        for j in range(i + 1, length):
+    for i in range(length - 1):
+        for j in range(i + 1, length - 1):
             A[j, i] /= A[i, i]
-            for k in range(i + 1, length):
+            for k in range(i + 1, length - 1):
                 A[j, k] -= A[j, i] * A[i, k]
     return A
 
