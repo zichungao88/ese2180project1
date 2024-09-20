@@ -1,61 +1,94 @@
 import numpy as np
 import json
 
-# TODO: Write a system of equations Ax = b to solve for the node voltages
-
-rows = 25
-columns = 25
-A = np.zeros((rows, columns))
+# 1 TODO: Write a system of equations Ax = b to solve for the node voltages
+# IN PROGRESS
+length = 25 # rows = columns
+A = np.zeros((length, length))
 # print(np.matrix(A))
-b = np.zeros(columns)
-b.shape = (columns, 1)
+b = np.zeros(length)
+b.shape = (length, 1) # column vector
 # print(np.matrix(b))
 # print(A.dot(b))
 
 
-# TODO: Write a function that reads in a file to obtain the resistances on each link
+# 2 TODO: Write a function that reads in a file to obtain the resistances on each link
 # DONE
 def read_resistances_json(file_name):
     resistances = {}
     with open(file_name, 'r') as file:
         data = json.load(file)
-        for entry in data:
-            node1 = entry['node1']
-            node2 = entry['node2']
-            resistance = entry['resistance']
+        for value in data:
+            node1 = value['node1']
+            node2 = value['node2']
+            resistance = value['resistance']
             resistances[(node1, node2)] = resistance
     return resistances
 
-resistance = read_resistances_json('node_resistances.json')
+resistances = read_resistances_json('node_resistances.json')
 # print(resistance)
 
 
-# TODO: Write a function that reads in a file to obtain the set of voltages at fixed nodes
+# 3 TODO: Write a function that reads in a file to obtain the set of voltages at fixed nodes
 # DONE
 def read_voltages_json(file_name):
     voltages = {}
     with open(file_name, 'r') as file:
         data = json.load(file)
-        for entry in data:
-            node = entry['node']
-            voltage = entry['voltage']
+        for value in data:
+            node = value['node']
+            voltage = value['voltage']
             voltages[node] = voltage
     return voltages
 
-voltage = read_voltages_json('node_voltages.json')
+voltages = read_voltages_json('node_voltages.json')
 # print(voltage)
 
 
-# TODO: Compute the matrix A using the data read in previously
+# 4 TODO: Compute the matrix A using the data read in previously
+# IN PROGRESS (ALMOST DONE)
+for i in range(length):
+    if i + 1 in voltages:
+        A[i, i] = 1
+        b[i] = voltages[i + 1]
+# print(np.matrix(A))
+# print(np.matrix(b))
+
+def get_neighbors(node):
+    neighbors = []
+    for key in resistances:
+        if key[0] == node:
+            neighbors.append(key[1])
+        elif key[1] == node:
+            neighbors.append(key[0])
+    return neighbors
+
+for node in range(1, length + 1):
+    neighbors = get_neighbors(node)
+    # print('Node ' + str(node) + ' is connected to node(s) ' + str(neighbor))
+    sum_resistances = 0
+    for neighbor in neighbors:
+        if (node, neighbor) in resistances:
+            resistance = resistances[(node, neighbor)]
+        else:
+            resistance = resistances[(neighbor, node)]
+    # print('The resistance between ' + str(node) + ' and ' + str(neighbor) + ' is ' + str(resistance))
+    if resistance > 0:
+        A[node - 1, neighbor - 1] = -1 / resistance
+        sum_resistances += 1 / resistance
+    A[node - 1, node - 1] = sum_resistances
+    b[node - 1] = 0
+# print(np.matrix(A))
+# print(np.matrix(b))
 
 
-# TODO: Compute the LU factorization of A
+# 5 TODO: Compute the LU factorization of A
 
 
-# TODO: Compute & output the node voltages & currents through each link
+# 6 TODO: Compute & output the node voltages & currents through each link
 
 
-# TODO: Write the output of the previous three steps to a file
+# 7 TODO: Write the output of the previous three steps to a file
 
 
-# TODO: Repeat but with a tree/graph network
+# 8 TODO: Repeat but with a tree/graph network
