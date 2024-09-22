@@ -57,8 +57,6 @@ def get_neighbors(node_self):
     return neighbors
 
 def calculate_A(resistances, voltages, length):
-    # A = np.zeros((length, length))
-    # b = np.zeros(length)
     for node_self in range(1, length + 1):
         if node_self in voltages:
             A[node_self - 1, node_self - 1] = 1
@@ -99,13 +97,24 @@ def LU_decomposition(A, length): # needs scrutiny
     return A
 
 U = LU_decomposition(A, length)
-print(np.matrix(np.round(U, 3)))
+# print(np.matrix(np.round(U, 3)))
 
 
 # 6 TODO: Compute & output the node voltages & currents through each link
-# IN PROGRESS
-# x = np.linalg.solve(A, b)
-# print(np.matrix(x))
+# DONE
+x = np.linalg.solve(A, b) # voltage at each node
+node_voltages = [0] * length # 25 nodes in 5x5 grid
+for i in range(len(node_voltages)):
+    node_voltages[i] = float(x[i][0])
+    # print('The voltage at Node ' + str(i + 1) + ' is ' + str(node_voltages[i]))
+
+link_currents = [] # 40 resistors connecting all nodes (will append one by one)
+for i in resistances:
+    v1 = node_voltages[i[0] - 1]
+    v2 = node_voltages[i[1] - 1]
+    current = (v1 - v2) / resistances.get(i) # define current from 1st node to 2nd node in resistances dictionary key
+    link_currents.append(current)
+    # print('The current from Node ' + str(i[0]) + ' to ' + str(i[1]) + ' is ' + str(current))
 
 
 # 7 TODO: Write the output of the previous three steps to a file
