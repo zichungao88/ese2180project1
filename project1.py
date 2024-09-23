@@ -63,14 +63,13 @@ def calculate_A(resistances, voltages, length):
             b[node_self - 1] = voltages[node_self]
         else:
             neighbors = get_neighbors(node_self)
-            # print('Node ' + str(node) + ' is connected to node(s) ' + str(neighbor))
             sum_resistances = 0
             for node_neighbor in neighbors:
                 if (node_self, node_neighbor) in resistances:
                     resistance = resistances[(node_self, node_neighbor)]
                 else:
                     resistance = resistances[(node_neighbor, node_self)]
-                # print('The resistance between ' + str(node) + ' and ' + str(neighbor) + ' is ' + str(resistance))
+                # print('The resistance between ' + str(node_self) + ' and ' + str(node_neighbor) + ' is ' + str(resistance))
                 if resistance > 0:
                     A[node_self - 1, node_neighbor - 1] = -1 / resistance
                     sum_resistances += 1 / resistance
@@ -84,20 +83,22 @@ A, b = calculate_A(resistances, voltages, length)
 
 
 # 5 TODO: Compute the LU factorization of A
-# IN PROGRESS
-L = np.zeros((length, length))
-U = np.zeros((length, length))
+# DONE
+L = np.identity(length) # 25x25 identity matrix
+U = A.copy() # start with A
 
-def LU_decomposition(A, length): # needs scrutiny
+def LU_decomposition(L, U, length):
     for i in range(length - 1):
-        for j in range(i + 1, length - 1):
-            A[j, i] /= A[i, i]
-            for k in range(i + 1, length - 1):
-                A[j, k] -= A[j, i] * A[i, k]
-    return A
+        for j in range(i + 1, length):
+            scalar = U[j, i] / U[i, i] # multiplier used for elimination below the pivot
+            L[j, i] = scalar # store in lower triangle of L i.e. inverse of all E's
+            for k in range(i, length):
+                U[j, k] -= scalar * U[i, k] # zero out the lower triangle column by column, moving down & to the right
+    return L, U
 
-U = LU_decomposition(A, length)
+L, U = LU_decomposition(L, U, length)
 # print(np.matrix(np.round(U, 3)))
+# print(np.matrix(np.round(L, 3)))
 
 
 # 6 TODO: Compute & output the node voltages & currents through each link
@@ -118,6 +119,23 @@ for i in resistances:
 
 
 # 7 TODO: Write the output of the previous three steps to a file
+# DONE
+grid_output = open('grid_output.txt', 'w')
+grid_output.write('Matrix A (from Step 4):\n')
+grid_output.write(str(np.matrix(np.round(A, 3)))) # rounded for readability
+grid_output.write('\n\nMatrix L (from Step 5):\n')
+grid_output.write(str(np.matrix(np.round(L, 3))))
+grid_output.write('\n\nMatrix U (from Step 5):\n')
+grid_output.write(str(np.matrix(np.round(U, 3))))
+grid_output.write('\n')
+for i in range(len(node_voltages)):
+    grid_output.write('\nThe voltage at Node ' + str(i + 1) + ' is ' + str(node_voltages[i]))
+grid_output.write('\n')
+counter = 0
+for i in resistances:
+    grid_output.write('\nThe current from Node ' + str(i[0]) + ' to ' + str(i[1]) + ' is ' + str(link_currents[counter]))
+    counter += 1
 
 
 # 8 TODO: Repeat but with a tree/graph network
+# IN PROGRESS (draw tree first)
