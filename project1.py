@@ -3,7 +3,7 @@ import json
 
 # 1 TODO: Write a system of equations Ax = b to solve for the node voltages
 # DONE
-length = 25 # rows = columns
+length = 25 # rows = columns = # of nodes
 A = np.zeros((length, length))
 b = np.zeros(length)
 b.shape = (length, 1) # column vector
@@ -135,4 +135,75 @@ for i in resistances:
 
 
 # 8 TODO: Repeat but with a tree/graph network
-# IN PROGRESS (draw tree first)
+# IN PROGRESS
+length1 = 7
+A1 = np.zeros((length1, length1))
+b1 = np.zeros(length1)
+b1.shape = (length1, 1)
+resistances1 = {(1, 2): 10.0, (1, 3): 12.0, (2, 4): 2.0, (2, 5): 4.0, (3, 6): 6.0, (3, 7): 8.0}
+voltages1 = {1: 0.0, 4: 2.0} # hard-coded for our tree network instead of taking input from json files again
+
+def get_neighbors1(node_self, length): # modified get_neighbors to account for tree structure (avoids IndexError)
+    neighbors = []
+    for key in resistances:
+        if key[0] == node_self and key[1] <= length:
+            neighbors.append(key[1])
+        elif key[1] == node_self and key[0] <= length:
+            neighbors.append(key[0])
+    return neighbors
+
+def calculate_A1(resistance, voltages, length): # modified calculate_A to account for tree structure (avoids KeyError)
+    for node_self in range(1, length + 1):
+        if node_self in voltages: # node voltage already given by node_voltages.json
+            A1[node_self - 1, node_self - 1] = 1
+            b1[node_self - 1] = voltages[node_self]
+        else: # node voltage unknown; must apply KCL
+            neighbors = get_neighbors1(node_self, length)
+            sum_resistances = 0
+            for node_neighbor in neighbors:
+                if (node_self, node_neighbor) in resistances:
+                    resistance = resistances[(node_self, node_neighbor)]
+                elif (node_neighbor, node_self) in resistances:
+                    resistance = resistances[(node_neighbor, node_self)]
+                else:
+                    resistance = None
+                # print('The resistance between ' + str(node_self) + ' and ' + str(node_neighbor) + ' is ' + str(resistance))
+                if resistance is not None and resistance > 0:
+                    A1[node_self - 1, node_neighbor - 1] = -1 / resistance
+                    sum_resistances += 1 / resistance
+                A1[node_self - 1, node_self - 1] = sum_resistances
+                b1[node_self - 1] = 0
+    return A1, b1
+
+A1, b1 = calculate_A1(resistances1, voltages1, length1)
+
+L1 = np.identity(length1)
+U1 = A1.copy()
+L1, U1 = LU_decomposition(L1, U1, length1)
+
+x1 = np.linalg.solve(A1, b1)
+node_voltages1 = [0] * length1
+for i in range(len(node_voltages1)):
+    node_voltages1[i] = float(x1[i][0])
+link_currents1 = []
+for i in resistances1:
+    v1_1 = node_voltages1[i[0] - 1]
+    v2_1 = node_voltages1[i[1] - 1]
+    current1 = (v1_1 - v2_1) / resistances1.get(i)
+    link_currents1.append(current1)
+
+tree_output = open('tree_output.txt', 'w')
+tree_output.write('Matrix A (from Step 4):\n')
+tree_output.write(str(np.matrix(np.round(A1, 3))))
+tree_output.write('\n\nMatrix L (from Step 5):\n')
+tree_output.write(str(np.matrix(np.round(L1, 3))))
+tree_output.write('\n\nMatrix U (from Step 5):\n')
+tree_output.write(str(np.matrix(np.round(U1, 3))))
+tree_output.write('\n')
+for i in range(len(node_voltages1)):
+    tree_output.write('\nThe voltage at Node ' + str(i + 1) + ' is ' + str(node_voltages1[i]))
+tree_output.write('\n')
+counter = 0
+for i in resistances1:
+    tree_output.write('\nThe current from Node ' + str(i[0]) + ' to ' + str(i[1]) + ' is ' + str(link_currents1[counter]))
+    counter += 1
