@@ -2,14 +2,11 @@ import numpy as np
 import json
 
 # 1 TODO: Write a system of equations Ax = b to solve for the node voltages
-# DONE (More Details of the generic compositions of A & b in written report)
+# DONE
 length = 25 # rows = columns
 A = np.zeros((length, length))
-# print(np.matrix(A))
 b = np.zeros(length)
 b.shape = (length, 1) # column vector
-# print(np.matrix(b))
-# print(A.dot(b))
 
 
 # 2 TODO: Write a function that reads in a file to obtain the resistances on each link
@@ -19,14 +16,14 @@ def read_resistances_json(file_name):
     with open(file_name, 'r') as file:
         data = json.load(file)
         for value in data:
-            node1 = value['node1']
-            node2 = value['node2']
+            node1 = value['node1'] # 1st element in key tuple
+            node2 = value['node2'] # 2nd element in key tuple
             resistance = value['resistance']
-            resistances[(node1, node2)] = resistance
+            resistances[(node1, node2)] = resistance # assign resistance value to key i.e. pair of nodes
     return resistances
 
 resistances = read_resistances_json('node_resistances.json')
-# print(resistance)
+# print(resistances)
 
 
 # 3 TODO: Write a function that reads in a file to obtain the set of voltages at fixed nodes
@@ -42,7 +39,7 @@ def read_voltages_json(file_name):
     return voltages
 
 voltages = read_voltages_json('node_voltages.json')
-# print(voltage)
+# print(voltages)
 
 
 # 4 TODO: Compute the matrix A using the data read in previously
@@ -58,10 +55,10 @@ def get_neighbors(node_self):
 
 def calculate_A(resistances, voltages, length):
     for node_self in range(1, length + 1):
-        if node_self in voltages:
+        if node_self in voltages: # node voltage already given by node_voltages.json
             A[node_self - 1, node_self - 1] = 1
             b[node_self - 1] = voltages[node_self]
-        else:
+        else: # node voltage unknown; must apply KCL
             neighbors = get_neighbors(node_self)
             sum_resistances = 0
             for node_neighbor in neighbors:
