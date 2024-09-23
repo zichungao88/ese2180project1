@@ -135,7 +135,7 @@ for i in resistances:
 
 
 # 8 TODO: Repeat but with a tree/graph network
-# IN PROGRESS
+# DONE
 length1 = 7
 A1 = np.zeros((length1, length1))
 b1 = np.zeros(length1)
