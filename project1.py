@@ -100,7 +100,11 @@ L, U = LU_decomposition(L, U, length)
 
 # 6 TODO: Compute & output the node voltages & currents through each link
 # DONE
-x = np.linalg.solve(A, b) # voltage at each node
+x = np.linalg.solve(A, b) # solve Ax = b to find voltage at each node
+# print(np.round(x, 3))
+y = np.linalg.solve(L, b) # alternative method: Ax = LUx = Ly = b
+x = np.linalg.solve(U, y)
+# print(np.round(x, 3))
 node_voltages = [0] * length # 25 nodes in 5x5 grid
 for i in range(len(node_voltages)):
     node_voltages[i] = float(x[i][0])

@@ -230,68 +230,68 @@ Matrix U (from Step 5):
    0.     0.     0.     0.     1.   ]]
 
 The voltage at Node 1 is 10.0
-The voltage at Node 2 is 8.273271738535206
-The voltage at Node 3 is 7.0255608916407
-The voltage at Node 4 is 6.076669388777026
-The voltage at Node 5 is 5.721763841159996
-The voltage at Node 6 is 7.787833987474957
-The voltage at Node 7 is 6.998292466624123
-The voltage at Node 8 is 6.2944122070943935
-The voltage at Node 9 is 5.553664543053787
-The voltage at Node 10 is 5.224896074496154
-The voltage at Node 11 is 6.707827406217012
-The voltage at Node 12 is 6.01789672731018
-The voltage at Node 13 is 5.424718659354659
-The voltage at Node 14 is 4.6844341955591
-The voltage at Node 15 is 4.267752451851627
-The voltage at Node 16 is 5.972786164412481
-The voltage at Node 17 is 5.264260939090495
-The voltage at Node 18 is 4.592986154613505
-The voltage at Node 19 is 3.574937476717818
-The voltage at Node 20 is 2.727254388016639
-The voltage at Node 21 is 5.592007535268942
-The voltage at Node 22 is 4.830450276981863
-The voltage at Node 23 is 4.044612231903416
-The voltage at Node 24 is 2.464611786422261
+The voltage at Node 2 is 8.273271738535202
+The voltage at Node 3 is 7.025560891640696
+The voltage at Node 4 is 6.076669388777019
+The voltage at Node 5 is 5.721763841159989
+The voltage at Node 6 is 7.787833987474952
+The voltage at Node 7 is 6.998292466624116
+The voltage at Node 8 is 6.294412207094387
+The voltage at Node 9 is 5.55366454305378
+The voltage at Node 10 is 5.224896074496147
+The voltage at Node 11 is 6.707827406217005
+The voltage at Node 12 is 6.017896727310172
+The voltage at Node 13 is 5.42471865935465
+The voltage at Node 14 is 4.684434195559091
+The voltage at Node 15 is 4.26775245185162
+The voltage at Node 16 is 5.972786164412472
+The voltage at Node 17 is 5.264260939090487
+The voltage at Node 18 is 4.592986154613495
+The voltage at Node 19 is 3.574937476717811
+The voltage at Node 20 is 2.727254388016634
+The voltage at Node 21 is 5.592007535268934
+The voltage at Node 22 is 4.830450276981855
+The voltage at Node 23 is 4.0446122319034075
+The voltage at Node 24 is 2.464611786422256
 The voltage at Node 25 is 0.0
 
-The current from Node 1 to 2 is 0.8633641307323972
-The current from Node 1 to 6 is 0.737388670841681
-The current from Node 2 to 3 is 0.4990843387578021
-The current from Node 2 to 7 is 0.36427979197459515
-The current from Node 3 to 4 is 0.31629716762122495
-The current from Node 3 to 8 is 0.18278717113657672
-The current from Node 4 to 5 is 0.1419622190468118
-The current from Node 4 to 9 is 0.17433494857441278
+The current from Node 1 to 2 is 0.8633641307323989
+The current from Node 1 to 6 is 0.7373886708416828
+The current from Node 2 to 3 is 0.49908433875780245
+The current from Node 2 to 7 is 0.3642797919745959
+The current from Node 3 to 4 is 0.31629716762122556
+The current from Node 3 to 8 is 0.18278717113657716
+The current from Node 4 to 5 is 0.14196221904681217
+The current from Node 4 to 9 is 0.1743349485744131
 The current from Node 5 to 10 is 0.14196221904681192
-The current from Node 6 to 7 is 0.19738538021270857
-The current from Node 6 to 11 is 0.5400032906289725
+The current from Node 6 to 7 is 0.1973853802127088
+The current from Node 6 to 11 is 0.5400032906289733
 The current from Node 7 to 8 is 0.28155210381189166
-The current from Node 7 to 12 is 0.28011306837541206
-The current from Node 8 to 9 is 0.24691588801353545
-The current from Node 8 to 13 is 0.21742338693493357
+The current from Node 7 to 12 is 0.28011306837541283
+The current from Node 8 to 9 is 0.24691588801353573
+The current from Node 8 to 13 is 0.21742338693493424
 The current from Node 9 to 10 is 0.13150738742305315
-The current from Node 9 to 14 is 0.28974344916489575
+The current from Node 9 to 14 is 0.2897434491648963
 The current from Node 10 to 15 is 0.27346960646986496
-The current from Node 11 to 12 is 0.1724826697267079
-The current from Node 11 to 16 is 0.36752062090226545
+The current from Node 11 to 12 is 0.17248266972670834
+The current from Node 11 to 16 is 0.36752062090226634
 The current from Node 12 to 13 is 0.23727122718220847
-The current from Node 12 to 17 is 0.21532451091991003
+The current from Node 12 to 17 is 0.21532451091990978
 The current from Node 13 to 14 is 0.24676148793185307
-The current from Node 13 to 18 is 0.20793312618528859
-The current from Node 14 to 15 is 0.1666726974829892
-The current from Node 14 to 19 is 0.3698322396137607
-The current from Node 15 to 20 is 0.4401423039528537
-The current from Node 16 to 17 is 0.17713130633049645
-The current from Node 16 to 21 is 0.19038931457176966
-The current from Node 17 to 18 is 0.26850991379079614
+The current from Node 13 to 18 is 0.2079331261852888
+The current from Node 14 to 15 is 0.1666726974829885
+The current from Node 14 to 19 is 0.3698322396137601
+The current from Node 15 to 20 is 0.4401423039528532
+The current from Node 16 to 17 is 0.17713130633049623
+The current from Node 16 to 21 is 0.19038931457176922
+The current from Node 17 to 18 is 0.26850991379079686
 The current from Node 17 to 22 is 0.1239459034596092
-The current from Node 18 to 19 is 0.3393495592985623
-The current from Node 18 to 23 is 0.13709348067752214
-The current from Node 19 to 20 is 0.3390732354804715
-The current from Node 19 to 24 is 0.3701085634318522
-The current from Node 20 to 25 is 0.7792155394333254
+The current from Node 18 to 19 is 0.3393495592985614
+The current from Node 18 to 23 is 0.13709348067752192
+The current from Node 19 to 20 is 0.3390732354804708
+The current from Node 19 to 24 is 0.37010856343185167
+The current from Node 20 to 25 is 0.7792155394333239
 The current from Node 21 to 22 is 0.19038931457176966
-The current from Node 22 to 23 is 0.3143352180313787
-The current from Node 23 to 24 is 0.45142869870890145
-The current from Node 24 to 25 is 0.8215372621407537
+The current from Node 22 to 23 is 0.3143352180313791
+The current from Node 23 to 24 is 0.45142869870890046
+The current from Node 24 to 25 is 0.821537262140752
